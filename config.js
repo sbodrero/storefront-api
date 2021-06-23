@@ -1,9 +1,6 @@
 import dotenv from 'dotenv';
+dotenv.config();
 
-const result = dotenv.config();
-if (result.error) {
-  throw result.error;
-}
-const { parsed: envs } = result;
-console.log(envs);
-module.exports = envs;
+module.exports = {
+  testVar: process.env.TEST_VAR,
+};
