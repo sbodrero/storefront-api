@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductStore = void 0;
+// @ts-ignore
 var database_1 = __importDefault(require("../database"));
 var ProductStore = /** @class */ (function () {
     function ProductStore() {
@@ -75,8 +76,8 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'SELECT * FROM books WHERE id=($1)';
-                        return [4 /*yield*/, Client.connect()];
+                        sql = 'SELECT * FROM products WHERE id=($1)';
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];
@@ -99,8 +100,8 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'INSERT INTO books (name, color, quantity) VALUES($1, $2, $3) RETURNING *';
-                        return [4 /*yield*/, Client.connect()];
+                        sql = 'INSERT INTO products (name, color, quantity) VALUES($1, $2, $3) RETURNING *';
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn
@@ -125,8 +126,8 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = 'DELETE FROM books WHERE id=($1)';
-                        return [4 /*yield*/, Client.connect()];
+                        sql = 'DELETE FROM products WHERE id=($1)';
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];

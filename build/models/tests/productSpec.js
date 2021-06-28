@@ -39,14 +39,93 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var product_1 = require("../product");
 var store = new product_1.ProductStore();
 describe("Product Model", function () {
-    it("sould have an index method", function () {
+    it("should have an index method", function () {
         expect(store.index).toBeDefined();
+    });
+    it("should have a show method", function () {
+        expect(store.show).toBeDefined();
+    });
+    it("should have a create method", function () {
+        expect(store.create).toBeDefined();
+    });
+    it("should have a delete method", function () {
+        expect(store.delete).toBeDefined();
     });
     it("index method should return a list of products", function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, store.index()];
+                case 1:
+                    result = _a.sent();
+                    expect(result).toEqual([]);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('create method should add a product', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, store.create({
+                        name: 'Bridge to Terabithia',
+                        color: 'Blue',
+                        quantity: 17,
+                    })];
+                case 1:
+                    result = _a.sent();
+                    // @ts-ignore
+                    expect(result).toEqual({
+                        id: 1,
+                        name: 'Bridge to Terabithia',
+                        color: 'Blue',
+                        quantity: 17,
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('index method should return a list of books', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, store.index()];
+                case 1:
+                    result = _a.sent();
+                    expect(result).toEqual([{
+                            id: 1,
+                            name: 'Bridge to Terabithia',
+                            color: 'Blue',
+                            quantity: 17,
+                        }]);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('show method should return the correct book', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, store.show("1")];
+                case 1:
+                    result = _a.sent();
+                    expect(result).toEqual({
+                        id: 1,
+                        name: 'Bridge to Terabithia',
+                        color: 'Blue',
+                        quantity: 17,
+                    });
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('delete method should remove the book', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    store.delete("1");
+                    return [4 /*yield*/, store.index()];
                 case 1:
                     result = _a.sent();
                     expect(result).toEqual([]);
