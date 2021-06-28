@@ -3,6 +3,8 @@ import { Pool } from 'pg';
 
 dotenv.config();
 
+console.log(process.env, 'process.env');
+
 const {
   POSTGRES_HOST,
   POSTGRES_DB,
