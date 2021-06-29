@@ -2,7 +2,7 @@
 import client from "../database";
 
 export type Product = {
-  id: number,
+  id?: string,
   name: string,
   color: string,
   quantity: number
@@ -21,6 +21,7 @@ export class ProductStore {
       throw new Error(`Can not get products ${error.toString()}`)
     }
   }
+
   async show(id: string): Promise<Product> {
     try {
       const sql = 'SELECT * FROM products WHERE id=($1)'
@@ -33,25 +34,48 @@ export class ProductStore {
 
       return result.rows[0]
     } catch (err) {
-      throw new Error(`Could not find book ${id}. Error: ${err}`)
+      throw new Error(`Could not find product ${id}. Error: ${err}`)
     }
   }
+
   async create(p: Product): Promise<Product> {
     try {
       const sql = 'INSERT INTO products (name, color, quantity) VALUES($1, $2, $3) RETURNING *'
       // @ts-ignore
-      const conn = await client.connect()
+      const conn = await client.connect();
 
       const result = await conn
-        .query(sql, [p.name, p.color, p.quantity])
+        .query(sql, [p.name, p.color, p.quantity]);
 
-      const book = result.rows[0]
+      console.log(result,'result');
+      const product = result.rows[0];
 
       conn.release()
 
-      return book
+      return product
     } catch (err) {
-      throw new Error(`Could not add new book ${name}. Error: ${err}`)
+      throw new Error(`Could not add new product ${name}. Error: ${err}`)
+    }
+  }
+
+  async update(p: Product): Promise<Product> {
+    try {
+      const sql = 'UPDATE products set name = $2, color = $3, ' +
+        'quantity = $4 WHERE id = $1';
+
+      // @ts-ignore
+      const conn = await client.connect()
+
+      const result =
+        await conn.query(sql, [p.id, p.name, p.color, p.quantity]);
+
+      const product = result.rows[0]
+
+      conn.release()
+
+      return product
+    } catch (err) {
+      throw new Error(`Could not update product ${p.id}. Error: ${err}`)
     }
   }
 
@@ -63,14 +87,13 @@ export class ProductStore {
 
       const result = await conn.query(sql, [id])
 
-      const book = result.rows[0]
+      const product = result.rows[0]
 
       conn.release()
 
-      return book
+      return product
     } catch (err) {
-      throw new Error(`Could not delete book ${id}. Error: ${err}`)
+      throw new Error(`Could not delete product ${id}. Error: ${err}`)
     }
   }
-
 }
