@@ -74,8 +74,8 @@ describe("Product Model", function () {
                     })];
                 case 1:
                     result = _a.sent();
-                    // @ts-ignore
                     expect(result).toEqual({
+                        // @ts-ignore
                         id: 1,
                         name: 'Bridge to Terabithia',
                         color: 'Blue',
@@ -85,7 +85,7 @@ describe("Product Model", function () {
             }
         });
     }); });
-    it('index method should return a list of books', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('index method should return a list of products', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -93,6 +93,7 @@ describe("Product Model", function () {
                 case 1:
                     result = _a.sent();
                     expect(result).toEqual([{
+                            // @ts-ignore
                             id: 1,
                             name: 'Bridge to Terabithia',
                             color: 'Blue',
@@ -102,7 +103,7 @@ describe("Product Model", function () {
             }
         });
     }); });
-    it('show method should return the correct book', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('show method should return the correct product', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -110,6 +111,7 @@ describe("Product Model", function () {
                 case 1:
                     result = _a.sent();
                     expect(result).toEqual({
+                        // @ts-ignore
                         id: 1,
                         name: 'Bridge to Terabithia',
                         color: 'Blue',
@@ -119,14 +121,15 @@ describe("Product Model", function () {
             }
         });
     }); });
-    it('delete method should remove the book', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('delete method should remove the product', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    store.delete("1");
-                    return [4 /*yield*/, store.index()];
+                case 0: return [4 /*yield*/, store.delete("1")];
                 case 1:
+                    _a.sent();
+                    return [4 /*yield*/, store.index()];
+                case 2:
                     result = _a.sent();
                     expect(result).toEqual([]);
                     return [2 /*return*/];

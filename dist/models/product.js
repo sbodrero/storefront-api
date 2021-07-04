@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.ProductStore = void 0;
 // @ts-ignore
 var database_1 = __importDefault(require("../database"));
@@ -52,7 +52,7 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, database_1.default.connect()];
+                        return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
                         sql = 'SELECT * FROM products';
@@ -77,7 +77,7 @@ var ProductStore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'SELECT * FROM products WHERE id=($1)';
-                        return [4 /*yield*/, database_1.default.connect()];
+                        return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];
@@ -101,7 +101,7 @@ var ProductStore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'INSERT INTO products (name, color, quantity) VALUES($1, $2, $3) RETURNING *';
-                        return [4 /*yield*/, database_1.default.connect()];
+                        return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn
@@ -128,7 +128,7 @@ var ProductStore = /** @class */ (function () {
                         _a.trys.push([0, 3, , 4]);
                         sql = 'UPDATE products set name = $2, color = $3, ' +
                             'quantity = $4 WHERE id = $1';
-                        return [4 /*yield*/, database_1.default.connect()];
+                        return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [p.id, p.name, p.color, p.quantity])];
@@ -145,7 +145,7 @@ var ProductStore = /** @class */ (function () {
             });
         });
     };
-    ProductStore.prototype.delete = function (id) {
+    ProductStore.prototype["delete"] = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, product, err_4;
             return __generator(this, function (_a) {
@@ -153,7 +153,7 @@ var ProductStore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'DELETE FROM products WHERE id=($1)';
-                        return [4 /*yield*/, database_1.default.connect()];
+                        return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];

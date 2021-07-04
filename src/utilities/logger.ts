@@ -1,8 +1,8 @@
 import express from 'express';
 
-const logger = (req: express.Request, res: express.Response, next: Function):
+const logger = (req: express.Request, res: express.Response, next: express.NextFunction):
 void => {
-  let url = req.url;
+  const url = req.url;
   console.log(`${url} was visited`);
   next();
 }

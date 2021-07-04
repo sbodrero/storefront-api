@@ -15,6 +15,7 @@ export class ProductStore {
       const conn = await client.connect();
       const sql = 'SELECT * FROM products';
       const { rows } = await conn.query(sql);
+
       conn.release();
       return rows;
     } catch(error) {
@@ -40,21 +41,19 @@ export class ProductStore {
 
   async create(p: Product): Promise<Product> {
     try {
-      const sql = 'INSERT INTO products (name, color, quantity) VALUES($1, $2, $3) RETURNING *'
+      const sql = 'INSERT INTO products (name, color, quantity) VALUES($1, $2, $3) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
 
       const result = await conn
         .query(sql, [p.name, p.color, p.quantity]);
 
-      console.log(result,'result');
       const product = result.rows[0];
-
       conn.release()
-
       return product
+
     } catch (err) {
-      throw new Error(`Could not add new product ${name}. Error: ${err}`)
+      throw new Error(`Could not add new product. Error: ${err}`)
     }
   }
 

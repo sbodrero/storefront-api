@@ -27,8 +27,8 @@ describe("Product Model", () => {
       color: 'Blue',
       quantity: 17,
     });
-    // @ts-ignore
     expect(result).toEqual({
+      // @ts-ignore
       id: 1,
       name: 'Bridge to Terabithia',
       color: 'Blue',
@@ -38,6 +38,7 @@ describe("Product Model", () => {
   it('index method should return a list of products', async () => {
     const result = await store.index();
     expect(result).toEqual([{
+      // @ts-ignore
       id: 1,
       name: 'Bridge to Terabithia',
       color: 'Blue',
@@ -48,6 +49,7 @@ describe("Product Model", () => {
   it('show method should return the correct product', async () => {
     const result = await store.show("1");
     expect(result).toEqual({
+      // @ts-ignore
       id: 1,
       name: 'Bridge to Terabithia',
       color: 'Blue',
@@ -56,7 +58,7 @@ describe("Product Model", () => {
   });
 
   it('delete method should remove the product', async () => {
-    store.delete("1");
+    await store.delete("1");
     const result = await store.index()
 
     expect(result).toEqual([]);

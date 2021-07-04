@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import routes from "./routes";
 import logger from "./utilities/logger";
 import products_routes from "./handlers/products";
+import users_routes from "./handlers/users";
+import orders_routes from "./handlers/orders";
 
 const app = express();
 const port = 3000;
@@ -16,6 +18,8 @@ app.get('/', function(req: Request, res: Response) {
 });
 
 products_routes(app);
+users_routes(app);
+orders_routes(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port : ${port}`);
