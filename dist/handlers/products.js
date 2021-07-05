@@ -38,11 +38,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv_1 = __importDefault(require("dotenv"));
-var product_1 = require("../models/product");
-dotenv_1["default"].config();
-var store = new product_1.ProductStore();
+var products_1 = require("../models/products");
+dotenv_1.default.config();
+var store = new products_1.ProductStore();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products, err_1;
     return __generator(this, function (_a) {
@@ -67,7 +67,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                id = req.body.id;
+                id = req.params.id;
                 return [4 /*yield*/, store.show(id)];
             case 1:
                 product = _a.sent();
@@ -76,15 +76,15 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, color, quantity, authorization, product, returnProduct, err_2;
+    var _a, name, price, category, authorization, product, returnProduct, err_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, name = _a.name, color = _a.color, quantity = _a.quantity, authorization = req.headers.authorization;
+                _a = req.body, name = _a.name, price = _a.price, category = _a.category, authorization = req.headers.authorization;
                 product = {
                     name: name,
-                    color: color,
-                    quantity: quantity
+                    price: price,
+                    category: category
                 };
                 _b.label = 1;
             case 1:
@@ -103,63 +103,9 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
         }
     });
 }); };
-var update = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, color, quantity, id, product, _product, err_3;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = _req.body, name = _a.name, color = _a.color, quantity = _a.quantity, id = _a.id;
-                product = {
-                    id: id,
-                    name: name,
-                    color: color,
-                    quantity: quantity
-                };
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.update(product)];
-            case 2:
-                _product = _b.sent();
-                res.json(_product);
-                return [3 /*break*/, 4];
-            case 3:
-                err_3 = _b.sent();
-                res.status(400);
-                res.json(err_3);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-var _delete = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, product, err_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = _req.body.id;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store["delete"](id)];
-            case 2:
-                product = _a.sent();
-                res.json(product);
-                return [3 /*break*/, 4];
-            case 3:
-                err_4 = _a.sent();
-                res.status(400);
-                res.json(err_4);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
 var products_routes = function (app) {
     app.get('/products', index);
     app.get('/products/:id', show);
     app.post('/products', create);
-    app.put('/products/:id', update);
-    app["delete"]('/products/:id', _delete);
 };
-exports["default"] = products_routes;
+exports.default = products_routes;

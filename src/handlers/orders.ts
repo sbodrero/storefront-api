@@ -17,7 +17,7 @@ const index = async(req:Request, res: Response) => {
 }
 
 const show = async(req: Request, res: Response) => {
-  const { body: { id }} = req;
+  const { params: { id }} = req;
   const order = await store.show(id);
   return res.json(order);
 }

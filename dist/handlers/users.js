@@ -38,25 +38,55 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var users_1 = require("../models/users");
 var store = new users_1.UserStore();
-dotenv_1["default"].config();
+dotenv_1.default.config();
 var TOKEN_SECRET = process.env.TOKEN_SECRET;
+var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var products, err_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, store.index()];
+            case 1:
+                products = _a.sent();
+                return [2 /*return*/, res.json(products)];
+            case 2:
+                err_1 = _a.sent();
+                res.status(400);
+                res.json(err_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+var show = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, product;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                return [4 /*yield*/, store.show(id)];
+            case 1:
+                product = _a.sent();
+                return [2 /*return*/, res.json(product)];
+        }
+    });
+}); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, first_name, last_name, username, password, email, user, returnUser, token, err_1;
+    var _a, first_name, last_name, password, user, returnUser, token, err_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, first_name = _a.first_name, last_name = _a.last_name, username = _a.username, password = _a.password, email = _a.email;
+                _a = req.body, first_name = _a.first_name, last_name = _a.last_name, password = _a.password;
                 user = {
                     first_name: first_name,
                     last_name: last_name,
-                    username: username,
                     password: password,
-                    email: email
                 };
                 _b.label = 1;
             case 1:
@@ -64,32 +94,9 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, store.create(user)];
             case 2:
                 returnUser = _b.sent();
-                token = jsonwebtoken_1["default"].sign({ user: returnUser }, TOKEN_SECRET);
+                token = jsonwebtoken_1.default.sign({ user: returnUser }, TOKEN_SECRET);
                 res.json(token);
                 return [3 /*break*/, 4];
-            case 3:
-                err_1 = _b.sent();
-                res.status(400);
-                res.json(err_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, user, token, err_2;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, username = _a.username, password = _a.password;
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.authenticate(username, password)];
-            case 2:
-                user = _b.sent();
-                token = jsonwebtoken_1["default"].sign({ user: user }, TOKEN_SECRET);
-                return [2 /*return*/, res.json(token)];
             case 3:
                 err_2 = _b.sent();
                 res.status(400);
@@ -100,7 +107,8 @@ var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 var users_routes = function (app) {
+    app.get('/users', index);
+    app.get('/users/:id', show);
     app.post('/users', create);
-    app.get('/users', authenticate);
 };
-exports["default"] = users_routes;
+exports.default = users_routes;

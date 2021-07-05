@@ -39,68 +39,63 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var dotenv_1 = __importDefault(require("dotenv"));
-var users_1 = require("../models/users");
-var store = new users_1.UserStore();
-dotenv_1.default.config();
-var TOKEN_SECRET = process.env.TOKEN_SECRET;
-var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, first_name, last_name, username, password, email, user, returnUser, token, err_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, first_name = _a.first_name, last_name = _a.last_name, username = _a.username, password = _a.password, email = _a.email;
-                user = {
-                    first_name: first_name,
-                    last_name: last_name,
-                    username: username,
-                    password: password,
-                    email: email
-                };
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.create(user)];
-            case 2:
-                returnUser = _b.sent();
-                token = jsonwebtoken_1.default.sign({ user: returnUser }, TOKEN_SECRET);
-                res.json(token);
-                return [3 /*break*/, 4];
-            case 3:
-                err_1 = _b.sent();
-                res.status(400);
-                res.json(err_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, user, token, err_2;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, username = _a.username, password = _a.password;
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.authenticate(username, password)];
-            case 2:
-                user = _b.sent();
-                token = jsonwebtoken_1.default.sign({ user: user }, TOKEN_SECRET);
-                return [2 /*return*/, res.json(token)];
-            case 3:
-                err_2 = _b.sent();
-                res.status(400);
-                res.json(err_2);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-var users_routes = function (app) {
-    app.post('/users', create);
-    app.get('/users', authenticate);
-};
-exports.default = users_routes;
+exports.DashboardQueries = void 0;
+// @ts-ignore
+var database_1 = __importDefault(require("../database"));
+var DashboardQueries = /** @class */ (function () {
+    function DashboardQueries() {
+    }
+    // Get all products that have been included in orders
+    DashboardQueries.prototype.productsInOrders = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = 'SELECT name, price, order_id FROM products INNER JOIN order_products ON product.id = order_products.id';
+                        return [4 /*yield*/, conn.query(sql)];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        err_1 = _a.sent();
+                        throw new Error("unable get products and orders: " + err_1);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    DashboardQueries.prototype.currentOrderByUser = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var conn, sql, result, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        conn = _a.sent();
+                        sql = 'SELECT first_name, last_name FROM users INNER JOIN orders ' +
+                            'ON users.id = orders.user_id WHERE users.id = 1';
+                        return [4 /*yield*/, conn.query(sql)];
+                    case 2:
+                        result = _a.sent();
+                        conn.release();
+                        // Return the last order as the current one
+                        return [2 /*return*/, result.rows];
+                    case 3:
+                        err_2 = _a.sent();
+                        throw new Error("unable get users with orders: " + err_2);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return DashboardQueries;
+}());
+exports.DashboardQueries = DashboardQueries;

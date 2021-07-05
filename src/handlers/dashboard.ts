@@ -3,26 +3,15 @@ import express, { Request, Response } from 'express';
 import { DashboardQueries } from '../services/dashboard';
 
 const dashboardRoutes = (app: express.Application) => {
-  app.get('/products_in_orders', productsInOrders);
-  app.get('/users-with-orders', usersWithOrders);
-  app.get('/five-most-expensive', fiveMostExpensive);
+  app.get('/current_orders_by_user/:id', currentOrderByUser);
 }
 
 const dashboard = new DashboardQueries()
 
-const usersWithOrders = async (_req: Request, res: Response) => {
-  const users = await dashboard.usersWithOrders()
+const currentOrderByUser = async (req: Request, res: Response) => {
+  const { params: { id }} = req;
+  const users = await dashboard.currentOrderByUser(id)
   res.json(users)
-}
-
-const productsInOrders = async (_req: Request, res: Response) => {
-  const products = await dashboard.productsInOrders();
-  res.json(products);
-}
-
-const fiveMostExpensive = async (_req: Request, res: Response) => {
-  const users = await dashboard.fiveMostExpensive();
-  res.json(users);
 }
 
 export default dashboardRoutes;

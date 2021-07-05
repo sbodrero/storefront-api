@@ -38,17 +38,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var dashboard_1 = require("../services/dashboard");
 var dashboardRoutes = function (app) {
-    app.get('/products_in_orders', productsInOrders);
+    app.get('/current_orders_by_user/:id', currentOrderByUser);
 };
 var dashboard = new dashboard_1.DashboardQueries();
-var productsInOrders = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var products;
+var currentOrderByUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, users;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, dashboard.productsInOrders()];
+            case 0:
+                id = req.params.id;
+                return [4 /*yield*/, dashboard.currentOrderByUser(id)];
             case 1:
-                products = _a.sent();
-                res.json(products);
+                users = _a.sent();
+                res.json(users);
                 return [2 /*return*/];
         }
     });

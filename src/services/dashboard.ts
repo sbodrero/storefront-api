@@ -19,36 +19,22 @@ export class DashboardQueries {
     }
   }
 
-  async usersWithOrders(): Promise<{ firstName: string, lastName: string }[]> {
+  async currentOrderByUser(id: string): Promise<{ first_name: string, last_name: string }[]> {
     try {
       //@ts-ignore
       const conn = await client.connect()
-      const sql = 'SELECT first_name, last_name FROM users INNER JOIN orders ON users.id = orders.user_id'
+      const sql = 'SELECT orders.id, users.first_name, users.last_name, orders.status FROM users INNER JOIN orders ' +
+        'ON users.id = orders.user_id WHERE users.id = $1';
 
-      const result = await conn.query(sql)
+      const result = await conn.query(sql, [1])
 
       conn.release()
 
-      return result.rows
+      // Return the last order as the current one
+      return result.rows;
     } catch (err) {
       throw new Error(`unable get users with orders: ${err}`)
     }
   }
 
-  // Get all users that have made orders
-  async fiveMostExpensive(): Promise<{name: string, price: number}[]> {
-    try {
-      //@ts-ignore
-      const conn = await Client.connect();
-      const sql = 'SELECT name, price FROM products ORDER BY price DESC LIMIT 5';
-
-      const result = await conn.query(sql);
-
-      conn.release();
-
-      return result.rows;
-    } catch (err) {
-      throw new Error(`unable get products by price: ${err}`)
-    }
-  }
 }

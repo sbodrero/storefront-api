@@ -1,5 +1,5 @@
 CREATE TABLE orders (
     ID SERIAL PRIMARY KEY,
-    status VARCHAR(64),
-    user_id bigint REFERENCES users(id)
+    status VARCHAR(64) NOT NULL,
+    user_id INTEGER REFERENCES users(id) NOT NULL
 );

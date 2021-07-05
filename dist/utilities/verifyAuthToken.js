@@ -2,9 +2,9 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1["default"].config();
+dotenv_1.default.config();
 var verifyAuthToken = function (req, res, next) {
     console.log('in liddlewre');
     try {
@@ -24,4 +24,4 @@ var verifyAuthToken = function (req, res, next) {
         return;
     }
 };
-exports["default"] = verifyAuthToken;
+exports.default = verifyAuthToken;

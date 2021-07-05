@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderStore = void 0;
 // @ts-ignore
 var database_1 = __importDefault(require("../database"));
@@ -52,7 +52,7 @@ var OrderStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         sql = 'SELECT * FROM orders';
@@ -77,7 +77,7 @@ var OrderStore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'SELECT * FROM orders WHERE id=($1)';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];
@@ -104,7 +104,7 @@ var OrderStore = /** @class */ (function () {
                     case 1:
                         _a.trys.push([1, 4, , 5]);
                         sql = 'INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 2:
                         conn = _a.sent();
                         return [4 /*yield*/, conn
@@ -130,7 +130,7 @@ var OrderStore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'UPDATE orders set status = $2, user_id = $3 WHERE id = $1';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [o.id, o.status, o.user_id])];
@@ -147,7 +147,7 @@ var OrderStore = /** @class */ (function () {
             });
         });
     };
-    OrderStore.prototype["delete"] = function (id) {
+    OrderStore.prototype.delete = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             var sql, conn, result, product, err_4;
             return __generator(this, function (_a) {
@@ -155,7 +155,7 @@ var OrderStore = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
                         sql = 'DELETE FROM orders WHERE id=($1)';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [id])];
@@ -199,7 +199,7 @@ var OrderStore = /** @class */ (function () {
                         _a.trys.push([4, 7, , 8]);
                         sql = 'INSERT INTO order_products (quantity, order_id, product_id) ' +
                             'VALUES($1, $2, $3)';
-                        return [4 /*yield*/, database_1["default"].connect()];
+                        return [4 /*yield*/, database_1.default.connect()];
                     case 5:
                         conn = _a.sent();
                         return [4 /*yield*/, conn.query(sql, [quantity, orderId, productId])];

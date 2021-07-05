@@ -1,4 +1,4 @@
-import { Product, ProductStore } from "../product";
+import { Product, ProductStore } from "../products";
 
 const store = new ProductStore();
 
@@ -12,9 +12,6 @@ describe("Product Model", () => {
   it("should have a create method", () => {
     expect(store.create).toBeDefined();
   });
-  it("should have a delete method", () => {
-    expect(store.delete).toBeDefined();
-  });
   it("index method should return a list of products",
     async() => {
     const result = await store.index();
@@ -23,16 +20,16 @@ describe("Product Model", () => {
   it('create method should add a product', async () => {
     // @ts-ignore
     const result = await store.create({
-      name: 'Bridge to Terabithia',
-      color: 'Blue',
-      quantity: 17,
+      name: 'Big yacht',
+      price: 10,
+      category: 'boat'
     });
     expect(result).toEqual({
       // @ts-ignore
       id: 1,
-      name: 'Bridge to Terabithia',
-      color: 'Blue',
-      quantity: 17,
+      name: 'Big yacht',
+      price: 10,
+      category: 'boat',
     });
   });
   it('index method should return a list of products', async () => {
@@ -40,9 +37,9 @@ describe("Product Model", () => {
     expect(result).toEqual([{
       // @ts-ignore
       id: 1,
-      name: 'Bridge to Terabithia',
-      color: 'Blue',
-      quantity: 17,
+      name: 'Big yacht',
+      price: 10,
+      category: 'boat',
     }]);
   });
 
@@ -51,17 +48,9 @@ describe("Product Model", () => {
     expect(result).toEqual({
       // @ts-ignore
       id: 1,
-      name: 'Bridge to Terabithia',
-      color: 'Blue',
-      quantity: 17,
+      name: 'Big yacht',
+      price: 10,
+      category: 'boat',
     });
   });
-
-  it('delete method should remove the product', async () => {
-    await store.delete("1");
-    const result = await store.index()
-
-    expect(result).toEqual([]);
-  });
-
 })

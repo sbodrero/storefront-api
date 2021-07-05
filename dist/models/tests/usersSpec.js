@@ -35,10 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var product_1 = require("../product");
-var store = new product_1.ProductStore();
-describe("Product Model", function () {
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var dotenv_1 = __importDefault(require("dotenv"));
+var users_1 = require("../users");
+dotenv_1.default.config();
+var store = new users_1.UserStore();
+describe("User Model", function () {
     it("should have an index method", function () {
         expect(store.index).toBeDefined();
     });
@@ -48,90 +54,61 @@ describe("Product Model", function () {
     it("should have a create method", function () {
         expect(store.create).toBeDefined();
     });
-    it("should have a delete method", function () {
-        expect(store.delete).toBeDefined();
-    });
-    it("index method should return a list of products", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("index method should return a list of users", function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, store.index()];
                 case 1:
                     result = _a.sent();
-                    expect(result).toEqual([]);
+                    expect(result).toHaveSize(1);
                     return [2 /*return*/];
             }
         });
     }); });
     it('create method should add a product', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
+        var TOKEN_SECRET, user, token, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, store.create({
-                        name: 'Bridge to Terabithia',
-                        color: 'Blue',
-                        quantity: 17,
-                    })];
+                case 0:
+                    TOKEN_SECRET = process.env.TOKEN_SECRET;
+                    user = {
+                        first_name: 'Jeff',
+                        last_name: 'Beck',
+                        password: 'guitare'
+                    };
+                    token = jsonwebtoken_1.default.sign({ user: user }, TOKEN_SECRET);
+                    return [4 /*yield*/, store.create(user)];
                 case 1:
                     result = _a.sent();
-                    expect(result).toEqual({
-                        // @ts-ignore
-                        id: 1,
-                        name: 'Bridge to Terabithia',
-                        color: 'Blue',
-                        quantity: 17,
-                    });
+                    expect(result).toEqual(token);
                     return [2 /*return*/];
             }
         });
     }); });
-    it('index method should return a list of products', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("index method should return a list of users", function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, store.index()];
                 case 1:
                     result = _a.sent();
-                    expect(result).toEqual([{
-                            // @ts-ignore
-                            id: 1,
-                            name: 'Bridge to Terabithia',
-                            color: 'Blue',
-                            quantity: 17,
-                        }]);
+                    expect(result).toHaveSize(2);
                     return [2 /*return*/];
             }
         });
     }); });
-    it('show method should return the correct product', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('show method should return the correct user', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, store.show("1")];
+                case 0: return [4 /*yield*/, store.show("2")];
                 case 1:
                     result = _a.sent();
-                    expect(result).toEqual({
-                        // @ts-ignore
-                        id: 1,
-                        name: 'Bridge to Terabithia',
-                        color: 'Blue',
-                        quantity: 17,
-                    });
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it('delete method should remove the product', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, store.delete("1")];
-                case 1:
-                    _a.sent();
-                    return [4 /*yield*/, store.index()];
-                case 2:
-                    result = _a.sent();
-                    expect(result).toEqual([]);
+                    // @ts-ignore
+                    expect(result.id).toEqual(2);
+                    expect(result.first_name).toEqual("Jeff");
+                    expect(result.last_name).toEqual("Beck");
                     return [2 /*return*/];
             }
         });

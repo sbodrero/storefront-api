@@ -38,10 +38,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var dotenv_1 = __importDefault(require("dotenv"));
 var orders_1 = require("../models/orders");
-dotenv_1["default"].config();
+dotenv_1.default.config();
 var store = new orders_1.OrderStore();
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var order, err_1;
@@ -67,7 +67,7 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                id = req.body.id;
+                id = req.params.id;
                 return [4 /*yield*/, store.show(id)];
             case 1:
                 order = _a.sent();
@@ -84,7 +84,7 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                 _a = req.body, status = _a.status, user_id = _a.user_id, authorization = req.headers.authorization;
                 order = {
                     status: status,
-                    user_id: user_id
+                    user_id: user_id,
                 };
                 _b.label = 1;
             case 1:
@@ -112,7 +112,7 @@ var update = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 order = {
                     id: id,
                     status: status,
-                    user_id: user_id
+                    user_id: user_id,
                 };
                 _b.label = 1;
             case 1:
@@ -140,7 +140,7 @@ var _delete = function (_req, res) { return __awaiter(void 0, void 0, void 0, fu
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store["delete"](id)];
+                return [4 /*yield*/, store.delete(id)];
             case 2:
                 order = _a.sent();
                 res.json(order);
@@ -182,7 +182,7 @@ var orders_routes = function (app) {
     app.get('/orders/:id', show);
     app.post('/orders', create);
     app.put('/orders/:id', update);
-    app["delete"]('/orders/:id', _delete);
+    app.delete('/orders/:id', _delete);
     app.post('/orders/:id/products', addProduct);
 };
-exports["default"] = orders_routes;
+exports.default = orders_routes;
