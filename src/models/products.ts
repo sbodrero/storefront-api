@@ -49,8 +49,7 @@ export class ProductStore {
         .query(sql, [p.name, p.price, p.category]);
 
       const product = result.rows[0];
-
-      console.log(result, 'products sss');
+      
       conn.release();
       return product;
 

@@ -12,7 +12,7 @@
     "tsc": "tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "migrate": "db-migrate up",
-    "test": "ENV=test yarn build && db-migrate reset -e test && db-migrate up -e test && jasmine-ts && db-migrate reset -e test && db-migrate up -e test",
+    "test": "ENV=test yarn build && db-migrate reset -e test && db-migrate up -e test && jasmine-ts && db-migrate reset -e test && db-migrate up -e test"
   },
   "keywords": [],
   "author": "",
