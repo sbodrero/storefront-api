@@ -22,13 +22,17 @@ Install dependencies `yarn install`;
 
 ### 2. set up database
 
-- in the folder `docker` creta a .env file with the following:  
+- in the folder `docker` create a .env file with the following:  
   `POSTGRES_PASSWORD=postgres`  
   `POSTGRES_HOST_AUTH_METHOD=trust` 
   
 
 - lauch `docker-compose up` command to start docker image.
 - open a shell session and enter the following commands.
+
+`sql -h localhost -U postgres`
+
+On the `psql` prompt do:
 
 `CREATE USER shopping_user WITH PASSWORD 'password123';`  
 `CREATE DATABASE shopping;`  
