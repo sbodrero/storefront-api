@@ -8,8 +8,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 - index route: `/products [GET]`
 - show route: `/products/:id [GET]`
 - create route: `/products [POST]` [token required]
-- [OPTIONAL] Top 5 most popular products
-- [OPTIONAL] Products by category (args: product category)
 
 #### Users
 - index route: `/users [GET]` [token required]
@@ -20,8 +18,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - index route: `/orders [GET]`
 - show route: `/orders/:id [GET]`
 - create route: `/orders [POST]`
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- current_orders_by_user route: `/current_orders_by_user/:id`[token required]
 
 ## Data Shapes
 #### Product

@@ -6,15 +6,13 @@
   "scripts": {
     "start": "nodemon src/server.ts",
     "build": "npx tsc",
-    "test_dev": "yarn run build && yarn run jasmine",
-    "prettier": "prettier --config .prettierrc 'build/**/*.js' --write",
+    "prettier": "prettier --config .prettierrc 'dist/**/*.js' --write",
     "prettier:check": "prettier --config .prettierrc 'build/**/*.js' --check .",
     "lint": "eslint . --ext .ts",
     "tsc": "tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "migrate": "db-migrate up",
     "test": "ENV=test yarn build && db-migrate reset -e test && db-migrate up -e test && jasmine-ts && db-migrate reset -e test && db-migrate up -e test",
-    "test_u": "ENV=test db-migrate reset && db-migrate up && jasmine-ts && db-migrate reset && db-migrate up"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +24,7 @@
     "@types/jasmine": "^3.7.5",
     "@types/jsonwebtoken": "^8.5.2",
     "@types/pg": "^8.6.0",
+    "@types/supertest": "^2.0.11",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "db-migrate": "^0.11.12",
@@ -36,6 +35,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
     "sql-fixtures": "^1.0.4",
+    "supertest": "^6.1.3",
     "typescript": "^4.3.2"
   },
   "devDependencies": {

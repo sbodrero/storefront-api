@@ -1,4 +1,4 @@
-import { Order, OrderStore } from '../orders';
+import { OrderStore } from '../orders';
 import { User, UserStore } from '../users';
 
 const store = new OrderStore();
@@ -12,7 +12,7 @@ describe('Order Model', () => {
     }
     const userStore = new UserStore();
     await userStore.create(user);
-  })
+  });
 
   it("should have an index method", () => {
     expect(store.index).toBeDefined();
@@ -27,7 +27,7 @@ describe('Order Model', () => {
     async() => {
       const result = await store.index();
       expect(result).toEqual([]);
-    });
+  });
   it('create method should add an order', async () => {
     // @ts-ignore
     const result = await store.create({
@@ -50,7 +50,7 @@ describe('Order Model', () => {
       user_id: 1,
     }]);
   });
-  it('show method should return the correct product', async () => {
+  it('show method should return the correct order', async () => {
     const result = await store.show("1");
     expect(result).toEqual({
       // @ts-ignore

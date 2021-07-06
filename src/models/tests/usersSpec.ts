@@ -21,7 +21,7 @@ describe("User Model", () => {
       const result = await store.index();
       expect(result).toHaveSize(1);
   });
-  it('create method should add a product', async () => {
+  it('create method should add a user', async () => {
     const {
       TOKEN_SECRET
     } = process.env;
@@ -32,11 +32,13 @@ describe("User Model", () => {
       password: 'guitare'
     }
 
+    const result = await store.create(user);
+
     // @ts-ignore
     const token = jwt.sign({ user: user }, TOKEN_SECRET);
-
-    const result = await store.create(user);
-    expect(result).toEqual(token);
+    
+    // @ts-ignore
+    expect(result.token).toEqual(token);
   });
   it("index method should return a list of users",
     async() => {

@@ -48,7 +48,7 @@ export class UserStore {
 
   async create(u: User): Promise<string> {
     try {
-      const sql = 'INSERT INTO users (first_name, last_name, password_digest, token) VALUES($1, $2, $3, $4)';
+      const sql = 'INSERT INTO users (first_name, last_name, password_digest, token) VALUES($1, $2, $3, $4) RETURNING token';
 
       const {
         BCRYPT_PASSWORD: pepper,
@@ -74,7 +74,7 @@ export class UserStore {
 
       conn.release();
 
-      return token;
+      return user;
     } catch (err) {
       throw new Error(`Could not add new user. Error: ${err}`)
     }

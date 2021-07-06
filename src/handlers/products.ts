@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import { Request, Response, Application } from 'express';
 import dotenv from 'dotenv';
 import { Product, ProductStore } from "../models/products";
 import verifyAuthToken from "../utilities/verifyAuthToken";
@@ -25,7 +25,7 @@ const show = async(req: Request, res: Response) => {
 }
 
 const create = async(req: Request, res: Response) => {
-  const { body: { name, price, category }, headers: { authorization } } = req;
+  const { body: { name, price, category } } = req;
   const product: Product = {
     name: name,
     price: price,
@@ -42,10 +42,10 @@ const create = async(req: Request, res: Response) => {
   }
 }
 
-const products_routes = (app: express.Application) => {
+const products_routes = (app: Application) => {
   app.get('/products', index);
   app.get('/products/:id', show);
-  app.post('/products', create);
+  app.post('/products', verifyAuthToken , create);
 };
 
 export default products_routes;

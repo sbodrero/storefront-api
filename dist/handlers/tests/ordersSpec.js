@@ -138,89 +138,72 @@ var __importDefault =
     return mod && mod.__esModule ? mod : { default: mod };
   };
 Object.defineProperty(exports, '__esModule', { value: true });
-var dotenv_1 = __importDefault(require('dotenv'));
-var users_1 = require('../models/users');
-var verifyAuthToken_1 = __importDefault(
-  require('../utilities/verifyAuthToken')
-);
-var store = new users_1.UserStore();
-dotenv_1.default.config();
-var TOKEN_SECRET = process.env.TOKEN_SECRET;
-var index = function (_req, res) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var products, err_1;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          _a.trys.push([0, 2, , 3]);
-          return [4 /*yield*/, store.index()];
-        case 1:
-          products = _a.sent();
-          return [2 /*return*/, res.json(products)];
-        case 2:
-          err_1 = _a.sent();
-          res.status(400);
-          res.json(err_1);
-          return [3 /*break*/, 3];
-        case 3:
-          return [2 /*return*/];
-      }
+var supertest_1 = __importDefault(require('supertest'));
+var server_1 = require('../../server');
+var orders_1 = require('../../models/orders');
+var request = supertest_1.default(server_1.app);
+describe('Test orders endpoint', function () {
+  beforeAll(function () {
+    spyOn(orders_1.OrderStore.prototype, 'create').and.returnValue(
+      // @ts-ignore
+      Promise.resolve({
+        id: 2,
+        status: 'complete',
+        user_id: '14'
+      })
+    );
+  });
+  it('get the /orders GET endpoint', function (done) {
+    return __awaiter(void 0, void 0, void 0, function () {
+      var response;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4 /*yield*/, request.get('/orders')];
+          case 1:
+            response = _a.sent();
+            expect(response.status).toBe(200);
+            done();
+            return [2 /*return*/];
+        }
+      });
     });
   });
-};
-var show = function (req, res) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var id, product;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          id = req.params.id;
-          return [4 /*yield*/, store.show(id)];
-        case 1:
-          product = _a.sent();
-          return [2 /*return*/, res.json(product)];
-      }
+  it('get the /orders/:id GET endpoint', function (done) {
+    return __awaiter(void 0, void 0, void 0, function () {
+      var response;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4 /*yield*/, request.get('/orders/1')];
+          case 1:
+            response = _a.sent();
+            expect(response.status).toBe(200);
+            done();
+            return [2 /*return*/];
+        }
+      });
     });
   });
-};
-var create = function (req, res) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var _a, first_name, last_name, password, user, returnUser, err_2;
-    return __generator(this, function (_b) {
-      switch (_b.label) {
-        case 0:
-          (_a = req.body),
-            (first_name = _a.first_name),
-            (last_name = _a.last_name),
-            (password = _a.password);
-          user = {
-            first_name: first_name,
-            last_name: last_name,
-            password: password
-          };
-          _b.label = 1;
-        case 1:
-          _b.trys.push([1, 3, , 4]);
-          return [4 /*yield*/, store.create(user)];
-        case 2:
-          returnUser = _b.sent();
-          // @ts-ignore
-          res.json(returnUser.token);
-          return [3 /*break*/, 4];
-        case 3:
-          err_2 = _b.sent();
-          res.status(400);
-          res.json(err_2);
-          return [3 /*break*/, 4];
-        case 4:
-          return [2 /*return*/];
-      }
+  it('get the /orders POST endpoint', function (done) {
+    return __awaiter(void 0, void 0, void 0, function () {
+      var response;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4 /*yield*/, request.post('/orders')];
+          case 1:
+            response = _a.sent();
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual({
+              id: 2,
+              status: 'complete',
+              user_id: '14'
+            });
+            done();
+            return [2 /*return*/];
+        }
+      });
     });
   });
-};
-var users_routes = function (app) {
-  app.get('/users', verifyAuthToken_1.default, index);
-  app.get('/users/:id', verifyAuthToken_1.default, show);
-  app.post('/users', create);
-};
-exports.default = users_routes;
+});

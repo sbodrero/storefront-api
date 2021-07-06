@@ -49,8 +49,10 @@ export class ProductStore {
         .query(sql, [p.name, p.price, p.category]);
 
       const product = result.rows[0];
-      conn.release()
-      return product
+
+      console.log(result, 'products sss');
+      conn.release();
+      return product;
 
     } catch (err) {
       throw new Error(`Could not add new product. Error: ${err}`)

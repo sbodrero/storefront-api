@@ -9,13 +9,11 @@ const {
   POSTGRES_DB,
   POSTGRES_USER,
   POSTGRES_USER_PASSWORD,
-  POSTGRES_PASSWORD,
   POSTGRES_TEST_DB,
   ENV,
 } = process.env;
 
 if (ENV === 'dev') {
-  console.log('in dev env');
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_DB,
@@ -25,7 +23,6 @@ if (ENV === 'dev') {
 }
 
 if (ENV === 'test') {
-  console.log('in test env');
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_TEST_DB,

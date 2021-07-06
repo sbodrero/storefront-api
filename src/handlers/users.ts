@@ -1,13 +1,8 @@
-import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import { Request, Response, Application } from 'express';
 import { User, UserStore } from "../models/users";
+import verifyAuthToken from '../utilities/verifyAuthToken';
 
 const store = new UserStore();
-
-dotenv.config();
-
-const { TOKEN_SECRET } = process.env;
 
 const index = async(_req: Request, res: Response) => {
   try {
@@ -34,18 +29,18 @@ const create = async(req: Request, res: Response) => {
   };
   try {
     const returnUser = await store.create(user);
+    
     // @ts-ignore
-    const token = jwt.sign({ user: returnUser }, TOKEN_SECRET);
-    res.json(token);
+    res.json(returnUser.token);
   } catch (err) {
     res.status(400);
     res.json(err);
   }
 };
 
-const users_routes = (app: express.Application) => {
-  app.get('/users', index);
-  app.get('/users/:id', show);
+const users_routes = (app: Application) => {
+  app.get('/users', verifyAuthToken, index);
+  app.get('/users/:id', verifyAuthToken, show);
   app.post('/users', create);
 };
 

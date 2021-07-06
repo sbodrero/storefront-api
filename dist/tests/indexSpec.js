@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var myFunc = function (num) {
-    return num * num;
+  return num * num;
 };

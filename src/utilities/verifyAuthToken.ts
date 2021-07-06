@@ -5,16 +5,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const verifyAuthToken = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
-  console.log('in liddlewre');
   try {
     const { headers: { authorization } } = req;
     const { TOKEN_SECRET } = process.env;
     const token = authorization && authorization.split(' ')[1]
-    console.log(token);
     // @ts-ignore
-    // if(token && jwt.verify(token, TOKEN_SECRET)) {
-    //   next();
-    // }
+    jwt.verify(token, TOKEN_SECRET)
     next();
   } catch (err) {
     res.status(401);

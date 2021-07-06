@@ -132,95 +132,29 @@ var __generator =
       return { value: op[0] ? op[1] : void 0, done: true };
     }
   };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
 Object.defineProperty(exports, '__esModule', { value: true });
-var dotenv_1 = __importDefault(require('dotenv'));
-var users_1 = require('../models/users');
-var verifyAuthToken_1 = __importDefault(
-  require('../utilities/verifyAuthToken')
-);
-var store = new users_1.UserStore();
-dotenv_1.default.config();
-var TOKEN_SECRET = process.env.TOKEN_SECRET;
-var index = function (_req, res) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var products, err_1;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          _a.trys.push([0, 2, , 3]);
-          return [4 /*yield*/, store.index()];
-        case 1:
-          products = _a.sent();
-          return [2 /*return*/, res.json(products)];
-        case 2:
-          err_1 = _a.sent();
-          res.status(400);
-          res.json(err_1);
-          return [3 /*break*/, 3];
-        case 3:
-          return [2 /*return*/];
-      }
+var dashboard_1 = require('../dashboard');
+var store = new dashboard_1.DashboardQueries();
+describe('Dashboard service', function () {
+  it('should have an currentOrderByUser method', function () {
+    expect(store.currentOrderByUser).toBeDefined();
+  });
+  it('currentOrderByUser method should return a list of orders and users', function () {
+    return __awaiter(void 0, void 0, void 0, function () {
+      var result;
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            return [4 /*yield*/, store.currentOrderByUser('1')];
+          case 1:
+            result = _a.sent();
+            expect(result).toEqual([
+              // @ts-ignore
+              { id: 1, first_name: 'seb', last_name: 'bod', status: 'Pending' }
+            ]);
+            return [2 /*return*/];
+        }
+      });
     });
   });
-};
-var show = function (req, res) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var id, product;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          id = req.params.id;
-          return [4 /*yield*/, store.show(id)];
-        case 1:
-          product = _a.sent();
-          return [2 /*return*/, res.json(product)];
-      }
-    });
-  });
-};
-var create = function (req, res) {
-  return __awaiter(void 0, void 0, void 0, function () {
-    var _a, first_name, last_name, password, user, returnUser, err_2;
-    return __generator(this, function (_b) {
-      switch (_b.label) {
-        case 0:
-          (_a = req.body),
-            (first_name = _a.first_name),
-            (last_name = _a.last_name),
-            (password = _a.password);
-          user = {
-            first_name: first_name,
-            last_name: last_name,
-            password: password
-          };
-          _b.label = 1;
-        case 1:
-          _b.trys.push([1, 3, , 4]);
-          return [4 /*yield*/, store.create(user)];
-        case 2:
-          returnUser = _b.sent();
-          // @ts-ignore
-          res.json(returnUser.token);
-          return [3 /*break*/, 4];
-        case 3:
-          err_2 = _b.sent();
-          res.status(400);
-          res.json(err_2);
-          return [3 /*break*/, 4];
-        case 4:
-          return [2 /*return*/];
-      }
-    });
-  });
-};
-var users_routes = function (app) {
-  app.get('/users', verifyAuthToken_1.default, index);
-  app.get('/users/:id', verifyAuthToken_1.default, show);
-  app.post('/users', create);
-};
-exports.default = users_routes;
+});
