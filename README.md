@@ -22,15 +22,29 @@ Install dependencies `yarn install`;
 
 ### 2. set up database
 
+- create a .env file with the following values
+
+`POSTGRES_PASSWORD=postgres`  
+`POSTGRES_HOST_AUTH_METHOD=trust`  
+`POSTGRES_HOST=127.0.0.1`  
+`POSTGRES_DB=shopping`  
+`POSTGRES_USER=shopping_user`  
+`POSTGRES_USER_PASSWORD=password123`
+`POSTGRES_TEST_DB=shopping_test`  
+`BCRYPT_PASSWORD=sbodrero`    
+`SALT_ROUNDS=10`  
+`TOKEN_SECRET=storefront`
+`TEST_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImZpcnN0X25hbWUiOiJzZWIiLCJsYXN0X25hbWUiOiJib2QiLCJwYXNzd29yZCI6ImxvbGl0byJ9LCJpYXQiOjE2MjU1MDEzMjd9.kKu84DFNxDU9NQE-Sfu8MnCyRMbhWU0HE8k4rJJjVjw`  
+`ENV=dev`
+
 - in the folder `docker` create a .env file with the following:  
   `POSTGRES_PASSWORD=postgres`  
-  `POSTGRES_HOST_AUTH_METHOD=trust` 
-  
+  `POSTGRES_HOST_AUTH_METHOD=trust`
 
 - lauch `docker-compose up` command to start docker image.
-- open a shell session and enter the following commands.
+- open a shell in the postgres container `docker exec -it <container-id> /bin/bash` (run `docker images` to get your id).;
 
-`sql -h localhost -U postgres`
+`psql -h localhost -U postgres`
 
 On the `psql` prompt do:
 
@@ -39,20 +53,6 @@ On the `psql` prompt do:
 `CREATE DATABASE shopping_test;`  
 `GRANT ALL PRIVILEGES ON DATABASE shopping TO shopping_user;`  
 `GRANT ALL PRIVILEGES ON DATABASE shopping_test TO shopping_user;`
-
-- create a .env file with the following values
-
-`POSTGRES_HOST=127.0.0.1`  
-`POSTGRES_DB=shopping`  
-`POSTGRES_USER=shopping_user`  
-`POSTGRES_USER_PASSWORD=password123`  
-`POSTGRES_PASSWORD=storefront@admin`  
-`POSTGRES_TEST_DB=shopping_test`  
-`BCRYPT_PASSWORD=sbodrero`    
-`SALT_ROUNDS=10`  
-`TOKEN_SECRET=storefront` 
-`TEST_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImZpcnN0X25hbWUiOiJzZWIiLCJsYXN0X25hbWUiOiJib2QiLCJwYXNzd29yZCI6ImxvbGl0byJ9LCJpYXQiOjE2MjU1MDEzMjd9.kKu84DFNxDU9NQE-Sfu8MnCyRMbhWU0HE8k4rJJjVjw`  
-`ENV=dev`
 
 - create a `database.json` file with the following content:
 

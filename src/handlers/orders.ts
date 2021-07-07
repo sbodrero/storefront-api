@@ -18,8 +18,13 @@ const index = async(req:Request, res: Response) => {
 
 const show = async(req: Request, res: Response) => {
   const { params: { id }} = req;
-  const order = await store.show(id);
-  return res.json(order);
+  try {
+    const order = await store.show(id);
+    return res.json(order);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 }
 
 const create = async(req: Request, res: Response) => {

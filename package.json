@@ -12,7 +12,7 @@
     "tsc": "tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "migrate": "db-migrate up",
-    "test": "ENV=test yarn build && db-migrate reset -e test && db-migrate up -e test && jasmine-ts && db-migrate reset -e test && db-migrate up -e test"
+    "test": "yarn build && db-migrate reset -e test && db-migrate up -e test && jasmine-ts && db-migrate reset -e test && db-migrate up -e test"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "@types/supertest": "^2.0.11",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "cross-env": "^7.0.3",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",
